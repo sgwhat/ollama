@@ -3,68 +3,22 @@ package llama
 //go:generate make -j 8
 
 /*
-#cgo CFLAGS: -O2 -std=c11 -DGGML_BUILD=1 -DNDEBUG -DLOG_DISABLE_LOGS -DGGML_USE_LLAMAFILE
-#cgo CXXFLAGS: -O2 -std=c++11 -DGGML_BUILD=1 -DNDEBUG -DLOG_DISABLE_LOGS -DGGML_USE_LLAMAFILE
-#cgo amd64,avx CFLAGS: -mavx
-#cgo amd64,avx CXXFLAGS: -mavx
-#cgo amd64,avx2 CFLAGS: -mavx2 -mfma
-#cgo amd64,avx2 CXXFLAGS: -mavx2 -mfma
-#cgo amd64,f16c CFLAGS: -mf16c
-#cgo amd64,f16c CXXFLAGS: -mf16c
-#cgo amd64,fma CFLAGS: -mfma
-#cgo amd64,fma CXXFLAGS: -mfma
-#cgo avx CFLAGS: -mavx
-#cgo avx CXXFLAGS: -mavx
-#cgo avx2 CFLAGS: -mavx2 -mfma -mf16c
-#cgo avx2 CXXFLAGS: -mavx2 -mfma -mf16c
-#cgo cuda CFLAGS: -fPIE -DGGML_USE_CUDA -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo cuda CFLAGS: -fPIE -DGGML_USE_CUDA -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo cuda CXXFLAGS: -DGGML_USE_CUDA -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo cuda CXXFLAGS: -DGGML_USE_CUDA -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo cuda_jetpack5 LDFLAGS: -lggml_cuda_jetpack5 -L/usr/local/cuda-11/lib64
-#cgo cuda_jetpack6 LDFLAGS: -lggml_cuda_jetpack6 -L/usr/local/cuda-12/lib64
-#cgo cuda_v11 LDFLAGS: -lggml_cuda_v11 -L/usr/local/cuda-11/lib64
-#cgo cuda_v12 LDFLAGS: -lggml_cuda_v12 -L/usr/local/cuda-12/lib64
-#cgo darwin,amd64 CFLAGS: -Wno-incompatible-pointer-types-discards-qualifiers
-#cgo darwin,amd64 CXXFLAGS: -Wno-incompatible-pointer-types-discards-qualifiers
-#cgo darwin,amd64 LDFLAGS: -framework Foundation
-#cgo darwin,amd64,avx2 CFLAGS: -DGGML_USE_ACCELERATE -DACCELERATE_NEW_LAPACK -DACCELERATE_LAPACK_ILP64
-#cgo darwin,amd64,avx2 CXXFLAGS: -DGGML_USE_ACCELERATE -DACCELERATE_NEW_LAPACK -DACCELERATE_LAPACK_ILP64
-#cgo darwin,amd64,avx2 LDFLAGS: -framework Accelerate
-#cgo darwin,arm64 CFLAGS: -DGGML_USE_METAL -DGGML_USE_ACCELERATE -DGGML_METAL_EMBED_LIBRARY -DACCELERATE_NEW_LAPACK -DACCELERATE_LAPACK_ILP64 -DGGML_USE_BLAS
-#cgo darwin,arm64 CXXFLAGS: -DGGML_USE_METAL -DGGML_USE_ACCELERATE -DGGML_METAL_EMBED_LIBRARY -DACCELERATE_NEW_LAPACK -DACCELERATE_LAPACK_ILP64 -DGGML_USE_BLAS
-#cgo darwin,arm64 LDFLAGS: -framework Foundation -framework Metal -framework MetalKit -framework Accelerate
-#cgo linux CFLAGS: -D_GNU_SOURCE
-#cgo linux CXXFLAGS: -D_GNU_SOURCE
-#cgo linux,amd64 LDFLAGS: -L${SRCDIR}/build/Linux/amd64
-#cgo linux,amd64 LDFLAGS: -L${SRCDIR}/build/Linux/amd64
-#cgo linux,arm64 CFLAGS: -D__aarch64__ -D__ARM_NEON -D__ARM_FEATURE_FMA
-#cgo linux,arm64 CXXFLAGS: -D__aarch64__ -D__ARM_NEON -D__ARM_FEATURE_FMA
-#cgo linux,arm64 LDFLAGS: -L${SRCDIR}/build/Linux/arm64
-#cgo linux,arm64,sve CFLAGS: -march=armv8.6-a+sve
-#cgo linux,arm64,sve CXXFLAGS: -march=armv8.6-a+sve
-#cgo linux,cuda LDFLAGS: -lcuda -lcudart -lcublas -lcublasLt -lpthread -ldl -lrt -lresolv
-#cgo linux,rocm LDFLAGS: -L/opt/rocm/lib -lpthread -ldl -lrt -lresolv
-#cgo rocm CFLAGS: -DGGML_USE_CUDA -DGGML_USE_HIPBLAS -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo rocm CXXFLAGS: -DGGML_USE_CUDA -DGGML_USE_HIPBLAS -DGGML_CUDA_DMMV_X=32 -DGGML_CUDA_PEER_MAX_BATCH_SIZE=128 -DGGML_CUDA_MMV_Y=1 -DGGML_BUILD=1
-#cgo rocm LDFLAGS: -L${SRCDIR} -lggml_rocm -lhipblas -lamdhip64 -lrocblas
-#cgo windows CFLAGS: -Wno-discarded-qualifiers -D_WIN32_WINNT=0x602
-#cgo windows CXXFLAGS: -D_WIN32_WINNT=0x602
-#cgo windows LDFLAGS: -lmsvcrt
-#cgo windows LDFLAGS: -lmsvcrt -static-libstdc++ -static-libgcc -static
-#cgo windows,amd64 LDFLAGS: -L${SRCDIR}/build/Windows/amd64
-#cgo windows,amd64 LDFLAGS: -L${SRCDIR}/build/Windows/amd64
-#cgo windows,arm64 CFLAGS: -D__aarch64__ -D__ARM_NEON -D__ARM_FEATURE_FMA
-#cgo windows,arm64 CXXFLAGS: -D__aarch64__ -D__ARM_NEON -D__ARM_FEATURE_FMA
-#cgo windows,arm64 LDFLAGS: -L${SRCDIR}/build/Windows/arm64
-#cgo windows,arm64 LDFLAGS: -L${SRCDIR}/build/Windows/arm64
-#cgo windows,cuda LDFLAGS: -lcuda -lcudart -lcublas -lcublasLt
-#cgo windows,rocm LDFLAGS: -lggml_rocm -lhipblas -lamdhip64 -lrocblas
+#cgo CXXFLAGS: -DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+#cgo CFLAGS: -DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+#cgo LDFLAGS: -L. -lggml -lllama -lllava_shared
+#cgo avx LDFLAGS: -L. -lggml -lllama -lllava_shared
+#cgo avx CXXFLAGS: -DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+#cgo avx CFLAGS: -DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+#cgo avx2 LDFLAGS: -L. -lggml -lllama -lllava_shared
+#cgo avx2 CXXFLAGS: -DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+#cgo avx2 CFLAGS:-DGGML_SYCL -DLLAMA_BIGDL -DGGML_USE_LLAMAFILE -DGGML_USE_OPENMP -DGGML_USE_SYCL -DGGML_SHARED -DGGML_SYCL_WARP_SIZE=16 -Wno-narrowing -DNDEBUG -fPIC  -Wmissing-declarations -Wmissing-noreturn -Wall -Wextra -Wpedantic -Wcast-qual -Wno-unused-function -std=gnu++17
+
 
 #include <stdlib.h>
 #include "llama.h"
 #include "clip.h"
 #include "ggml.h"
+#include "ggml-sycl.h"
 #include "llava.h"
 #include "mllama.h"
 #include "sampling_ext.h"
@@ -98,7 +52,7 @@ import (
 var CpuFeatures = ""
 
 func BackendInit() {
-	C.llama_backend_init()
+	C.llama_backend_init() 
 }
 
 func PrintSystemInfo() string {
@@ -543,62 +497,62 @@ func (c *ClipContext) NewEmbed(llamaContext *Context, data []byte) ([][]float32,
 	return embed, nil
 }
 
-type MllamaContext struct {
-	c *C.struct_mllama_ctx
-}
+// type MllamaContext struct {
+// 	c *C.struct_mllama_ctx
+// }
 
-func NewMllamaContext(llamaContext *Context, modelPath string) (*MllamaContext, error) {
-	mp := C.CString(modelPath)
-	defer C.free(unsafe.Pointer(mp))
-	c := C.mllama_model_load(mp, 1)
-	if c == nil {
-		return nil, fmt.Errorf("unable to load mllama model: %v", modelPath)
-	}
+// func NewMllamaContext(llamaContext *Context, modelPath string) (*MllamaContext, error) {
+// 	mp := C.CString(modelPath)
+// 	defer C.free(unsafe.Pointer(mp))
+// 	c := C.mllama_model_load(mp, 1)
+// 	if c == nil {
+// 		return nil, fmt.Errorf("unable to load mllama model: %v", modelPath)
+// 	}
 
-	projEmbedSize := int(C.mllama_n_embd(c))
-	modelEmbedSize := llamaContext.Model().NEmbd()
-	if projEmbedSize != modelEmbedSize {
-		return nil, fmt.Errorf("projector embedding size (%d) does not match model (%d)", projEmbedSize, modelEmbedSize)
-	}
+// 	projEmbedSize := int(C.mllama_n_embd(c))
+// 	modelEmbedSize := llamaContext.Model().NEmbd()
+// 	if projEmbedSize != modelEmbedSize {
+// 		return nil, fmt.Errorf("projector embedding size (%d) does not match model (%d)", projEmbedSize, modelEmbedSize)
+// 	}
 
-	return &MllamaContext{c: c}, nil
-}
+// 	return &MllamaContext{c: c}, nil
+// }
 
-func (m *MllamaContext) Free() {
-	C.mllama_free(m.c)
-}
+// func (m *MllamaContext) Free() {
+// 	C.mllama_free(m.c)
+// }
 
-func (m *MllamaContext) NewEmbed(llamaContext *Context, data []byte, aspectRatioId int) ([][]float32, error) {
-	img := C.mllama_image_init()
-	defer C.mllama_image_free(img)
+// func (m *MllamaContext) NewEmbed(llamaContext *Context, data []byte, aspectRatioId int) ([][]float32, error) {
+// 	img := C.mllama_image_init()
+// 	defer C.mllama_image_free(img)
 
-	ok := bool(C.mllama_image_load_from_data(unsafe.Pointer(&data[0]), C.int(len(data)), 560, 560, 3, 4, C.int(aspectRatioId), img))
-	if !ok {
-		return nil, errors.New("unable to load mllama image data")
-	}
+// 	ok := bool(C.mllama_image_load_from_data(unsafe.Pointer(&data[0]), C.int(len(data)), 560, 560, 3, 4, C.int(aspectRatioId), img))
+// 	if !ok {
+// 		return nil, errors.New("unable to load mllama image data")
+// 	}
 
-	rows := make([]float32, m.EmbedSize(llamaContext))
-	ok = bool(C.mllama_image_encode(m.c, C.int(llamaContext.numThreads), img, (*C.float)(unsafe.Pointer(&rows[0]))))
-	if !ok {
-		return nil, errors.New("unable to make mllama embedding from image")
-	}
+// 	rows := make([]float32, m.EmbedSize(llamaContext))
+// 	ok = bool(C.mllama_image_encode(m.c, C.int(llamaContext.numThreads), img, (*C.float)(unsafe.Pointer(&rows[0]))))
+// 	if !ok {
+// 		return nil, errors.New("unable to make mllama embedding from image")
+// 	}
 
-	embed := make([][]float32, 1)
-	embed[0] = rows
+// 	embed := make([][]float32, 1)
+// 	embed[0] = rows
 
-	return embed, nil
-}
+// 	return embed, nil
+// }
 
-func (m *MllamaContext) EmbedSize(llamaContext *Context) int {
-	numTokens := int(C.mllama_n_positions(m.c) * C.mllama_n_tiles(m.c))
-	numEmbed := llamaContext.Model().NEmbd()
+// func (m *MllamaContext) EmbedSize(llamaContext *Context) int {
+// 	numTokens := int(C.mllama_n_positions(m.c) * C.mllama_n_tiles(m.c))
+// 	numEmbed := llamaContext.Model().NEmbd()
 
-	return numTokens * numEmbed
-}
+// 	return numTokens * numEmbed
+// }
 
-func (c *Context) SetCrossAttention(state bool) {
-	C.llama_set_cross_attention(c.c, C.bool(state))
-}
+// func (c *Context) SetCrossAttention(state bool) {
+// 	C.llama_set_cross_attention(c.c, C.bool(state))
+// }
 
 func (c *Context) Synchronize() {
 	C.llama_synchronize(c.c)
@@ -606,69 +560,69 @@ func (c *Context) Synchronize() {
 
 // sampling
 // TODO: this is a temporary wrapper to allow calling C++ code from CGo
-type SamplingContext struct {
-	c *C.struct_gpt_sampler
-}
+// type SamplingContext struct {
+// 	c *C.struct_gpt_sampler
+// }
 
-type SamplingParams struct {
-	TopK           int
-	TopP           float32
-	MinP           float32
-	TfsZ           float32
-	TypicalP       float32
-	Temp           float32
-	RepeatLastN    int
-	PenaltyRepeat  float32
-	PenaltyFreq    float32
-	PenaltyPresent float32
-	Mirostat       int
-	MirostatTau    float32
-	MirostatEta    float32
-	PenalizeNl     bool
-	Seed           uint32
-	Grammar        string
-}
+// type SamplingParams struct {
+// 	TopK           int
+// 	TopP           float32
+// 	MinP           float32
+// 	TfsZ           float32
+// 	TypicalP       float32
+// 	Temp           float32
+// 	RepeatLastN    int
+// 	PenaltyRepeat  float32
+// 	PenaltyFreq    float32
+// 	PenaltyPresent float32
+// 	Mirostat       int
+// 	MirostatTau    float32
+// 	MirostatEta    float32
+// 	PenalizeNl     bool
+// 	Seed           uint32
+// 	Grammar        string
+// }
 
-func NewSamplingContext(model *Model, params SamplingParams) (*SamplingContext, error) {
-	var cparams C.struct_gpt_sampler_cparams
-	cparams.top_k = C.int32_t(params.TopK)
-	cparams.top_p = C.float(params.TopP)
-	cparams.min_p = C.float(params.MinP)
-	cparams.tfs_z = C.float(params.TfsZ)
-	cparams.typical_p = C.float(params.TypicalP)
-	cparams.temp = C.float(params.Temp)
-	cparams.penalty_last_n = C.int32_t(params.RepeatLastN)
-	cparams.penalty_repeat = C.float(params.PenaltyRepeat)
-	cparams.penalty_freq = C.float(params.PenaltyFreq)
-	cparams.penalty_present = C.float(params.PenaltyFreq)
-	cparams.mirostat = C.int32_t(params.Mirostat)
-	cparams.mirostat_tau = C.float(params.MirostatTau)
-	cparams.mirostat_eta = C.float(params.MirostatEta)
-	cparams.penalize_nl = C.bool(params.PenalizeNl)
-	cparams.seed = C.uint32_t(params.Seed)
+// func NewSamplingContext(model *Model, params SamplingParams) (*SamplingContext, error) {
+// 	var cparams C.struct_gpt_sampler_cparams
+// 	cparams.top_k = C.int32_t(params.TopK)
+// 	cparams.top_p = C.float(params.TopP)
+// 	cparams.min_p = C.float(params.MinP)
+// 	cparams.tfs_z = C.float(params.TfsZ)
+// 	cparams.typical_p = C.float(params.TypicalP)
+// 	cparams.temp = C.float(params.Temp)
+// 	cparams.penalty_last_n = C.int32_t(params.RepeatLastN)
+// 	cparams.penalty_repeat = C.float(params.PenaltyRepeat)
+// 	cparams.penalty_freq = C.float(params.PenaltyFreq)
+// 	cparams.penalty_present = C.float(params.PenaltyFreq)
+// 	cparams.mirostat = C.int32_t(params.Mirostat)
+// 	cparams.mirostat_tau = C.float(params.MirostatTau)
+// 	cparams.mirostat_eta = C.float(params.MirostatEta)
+// 	cparams.penalize_nl = C.bool(params.PenalizeNl)
+// 	cparams.seed = C.uint32_t(params.Seed)
 
-	grammar := C.CString(params.Grammar)
-	defer C.free(unsafe.Pointer(grammar))
+// 	grammar := C.CString(params.Grammar)
+// 	defer C.free(unsafe.Pointer(grammar))
 
-	cparams.grammar = grammar
-	context := &SamplingContext{c: C.gpt_sampler_cinit(model.c, &cparams)}
-	if context.c == nil {
-		return nil, errors.New("unable to create sampling context")
-	}
+// 	cparams.grammar = grammar
+// 	context := &SamplingContext{c: C.gpt_sampler_cinit(model.c, &cparams)}
+// 	if context.c == nil {
+// 		return nil, errors.New("unable to create sampling context")
+// 	}
 
-	runtime.SetFinalizer(context, func(s *SamplingContext) { C.gpt_sampler_cfree(s.c) })
+// 	runtime.SetFinalizer(context, func(s *SamplingContext) { C.gpt_sampler_cfree(s.c) })
 
-	return context, nil
-}
+// 	return context, nil
+// }
 
-func (s *SamplingContext) Reset() {
-	C.gpt_sampler_creset(s.c)
-}
+// func (s *SamplingContext) Reset() {
+// 	C.gpt_sampler_creset(s.c)
+// }
 
-func (s *SamplingContext) Sample(llamaContext *Context, idx int) int {
-	return int(C.gpt_sampler_csample(s.c, llamaContext.c, C.int(idx)))
-}
+// func (s *SamplingContext) Sample(llamaContext *Context, idx int) int {
+// 	return int(C.gpt_sampler_csample(s.c, llamaContext.c, C.int(idx)))
+// }
 
-func (s *SamplingContext) Accept(id int, applyGrammar bool) {
-	C.gpt_sampler_caccept(s.c, C.llama_token(id), C.bool(applyGrammar))
-}
+// func (s *SamplingContext) Accept(id int, applyGrammar bool) {
+// 	C.gpt_sampler_caccept(s.c, C.llama_token(id), C.bool(applyGrammar))
+// }
