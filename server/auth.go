@@ -15,8 +15,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/auth"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/auth"
 )
 
 type registryChallenge struct {

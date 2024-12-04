@@ -7,10 +7,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/discover"
-	"github.com/ollama/ollama/envconfig"
-	"github.com/ollama/ollama/format"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/discover"
+	"ipex-llm-ollama/envconfig"
+	"ipex-llm-ollama/format"
 )
 
 // This algorithm looks for a complete fit to determine if we need to unload other models

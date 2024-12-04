@@ -25,9 +25,9 @@ import (
 	"net/url"
 	"runtime"
 
-	"github.com/ollama/ollama/envconfig"
-	"github.com/ollama/ollama/format"
-	"github.com/ollama/ollama/version"
+	"ipex-llm-ollama/envconfig"
+	"ipex-llm-ollama/format"
+	"ipex-llm-ollama/version"
 )
 
 // Client encapsulates client state for interacting with the ollama

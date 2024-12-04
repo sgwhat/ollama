@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ollama/ollama/util/bufioutil"
+	"ipex-llm-ollama/util/bufioutil"
 )
 
 type GGML struct {

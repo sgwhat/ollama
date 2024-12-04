@@ -22,15 +22,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/envconfig"
-	"github.com/ollama/ollama/format"
-	"github.com/ollama/ollama/llama"
-	"github.com/ollama/ollama/llm"
-	"github.com/ollama/ollama/parser"
-	"github.com/ollama/ollama/template"
-	"github.com/ollama/ollama/types/model"
-	"github.com/ollama/ollama/version"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/envconfig"
+	"ipex-llm-ollama/format"
+	"ipex-llm-ollama/llama/llamafile"
+	"ipex-llm-ollama/llm"
+	"ipex-llm-ollama/parser"
+	"ipex-llm-ollama/template"
+	"ipex-llm-ollama/types/model"
+	"ipex-llm-ollama/version"
 )
 
 var (

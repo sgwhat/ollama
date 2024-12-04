@@ -10,7 +10,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/ollama/ollama/envconfig"
+	"ipex-llm-ollama/envconfig"
 )
 
 // Determine if the given ROCm lib directory is usable by checking for existence of some glob patterns

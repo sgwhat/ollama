@@ -9,10 +9,10 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/llm"
-	"github.com/ollama/ollama/server/imageproc"
-	"github.com/ollama/ollama/template"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/llm"
+	"ipex-llm-ollama/server/imageproc"
+	"ipex-llm-ollama/template"
 )
 
 type tokenizeFunc func(context.Context, string) ([]int, error)

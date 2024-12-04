@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/ollama/ollama/llm"
+	"ipex-llm-ollama/llm"
 )
 
 type mixtralModel struct {

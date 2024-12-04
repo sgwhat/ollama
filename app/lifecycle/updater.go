@@ -19,8 +19,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ollama/ollama/auth"
-	"github.com/ollama/ollama/version"
+	"ipex-llm-ollama/auth"
+	"ipex-llm-ollama/version"
 )
 
 var (

@@ -19,8 +19,8 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/format"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/format"
 )
 
 var blobUploadManager sync.Map

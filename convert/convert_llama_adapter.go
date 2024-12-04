@@ -7,7 +7,7 @@ import (
 	"github.com/pdevine/tensor"
 	"github.com/pdevine/tensor/native"
 
-	"github.com/ollama/ollama/llm"
+	"ipex-llm-ollama/llm"
 )
 
 type llamaAdapter struct {

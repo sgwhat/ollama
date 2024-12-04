@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/ollama/ollama/format"
+	"ipex-llm-ollama/format"
 )
 
 type memInfo struct {

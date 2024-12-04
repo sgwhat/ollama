@@ -16,11 +16,11 @@ import (
 	"strings"
 	"text/template/parse"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/convert"
-	"github.com/ollama/ollama/llm"
-	"github.com/ollama/ollama/template"
-	"github.com/ollama/ollama/types/model"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/convert"
+	"ipex-llm-ollama/llm"
+	"ipex-llm-ollama/template"
+	"ipex-llm-ollama/types/model"
 )
 
 var intermediateBlobs map[string]string = make(map[string]string)

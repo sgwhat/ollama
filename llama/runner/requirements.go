@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/ollama/ollama/llama"
-	"github.com/ollama/ollama/version"
+	"ipex-llm-ollama/llama/llamafile"
+	"ipex-llm-ollama/version"
 )
 
 func printRequirements(fp *os.File) {

@@ -12,9 +12,9 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/llm"
-	"github.com/ollama/ollama/template"
+	"ipex-llm-ollama/api"
+	"ipex-llm-ollama/llm"
+	"ipex-llm-ollama/template"
 )
 
 func readFile(t *testing.T, base, name string) *bytes.Buffer {
