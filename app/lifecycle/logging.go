@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"ipex-llm-ollama/envconfig"
+	"ollama/envconfig"
 )
 
 func InitLogging() {

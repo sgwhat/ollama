@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"ipex-llm-ollama/types/model"
+	"ollama/types/model"
 )
 
 func createManifest(t *testing.T, path, name string) {

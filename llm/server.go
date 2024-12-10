@@ -24,13 +24,13 @@ import (
 
 	"golang.org/x/sync/semaphore"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/build"
-	"ipex-llm-ollama/discover"
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/format"
-	"ipex-llm-ollama/llama/llamafile"
-	"ipex-llm-ollama/runners"
+	"ollama/api"
+	"ollama/build"
+	"ollama/discover"
+	"ollama/envconfig"
+	"ollama/format"
+	"ollama/llama/llamafile"
+	"ollama/runners"
 )
 
 type LlamaServer interface {

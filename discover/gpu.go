@@ -20,8 +20,8 @@ import (
 	"sync"
 	"unsafe"
 
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/format"
+	"ollama/envconfig"
+	"ollama/format"
 )
 
 type cudaHandles struct {

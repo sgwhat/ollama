@@ -14,11 +14,11 @@ import (
 	"sync"
 	"time"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/discover"
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/format"
-	"ipex-llm-ollama/llm"
+	"ollama/api"
+	"ollama/discover"
+	"ollama/envconfig"
+	"ollama/format"
+	"ollama/llm"
 )
 
 type LlmRequest struct {

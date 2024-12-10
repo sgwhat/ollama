@@ -11,7 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"ipex-llm-ollama/types/model"
+	"ollama/types/model"
 )
 
 type Manifest struct {

@@ -15,8 +15,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/llm"
+	"ollama/api"
+	"ollama/llm"
 )
 
 var stream bool = false

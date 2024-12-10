@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 
-	"ipex-llm-ollama/api"
+	"ollama/api"
 )
 
 func startApp(ctx context.Context, client *api.Client) error {

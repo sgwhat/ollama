@@ -22,8 +22,8 @@ import (
 
 	"golang.org/x/sync/semaphore"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/llama/llamafile"
+	"ollama/api"
+	"ollama/llama/llamafile"
 )
 
 // input is an element of the prompt to process, either

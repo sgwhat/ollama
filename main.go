@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"ipex-llm-ollama/cmd"
+	"ollama/cmd"
 )
 
 func main() {

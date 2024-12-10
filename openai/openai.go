@@ -16,8 +16,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/types/model"
+	"ollama/api"
+	"ollama/types/model"
 )
 
 type Error struct {

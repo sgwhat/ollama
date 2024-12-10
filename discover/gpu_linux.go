@@ -10,7 +10,7 @@ import (
 	"sort"
 	"strings"
 
-	"ipex-llm-ollama/format"
+	"ollama/format"
 )
 
 var CudartGlobs = []string{

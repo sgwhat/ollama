@@ -9,7 +9,7 @@ import (
 	"log/slog"
 	"strings"
 
-	"ipex-llm-ollama/llm"
+	"ollama/llm"
 )
 
 type ModelParameters struct {

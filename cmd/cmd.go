@@ -33,14 +33,14 @@ import (
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/format"
-	"ipex-llm-ollama/parser"
-	"ipex-llm-ollama/progress"
-	"ipex-llm-ollama/server"
-	"ipex-llm-ollama/types/model"
-	"ipex-llm-ollama/version"
+	"ollama/api"
+	"ollama/envconfig"
+	"ollama/format"
+	"ollama/parser"
+	"ollama/progress"
+	"ollama/server"
+	"ollama/types/model"
+	"ollama/version"
 )
 
 var (

@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"ipex-llm-ollama/llama/llamafile"
+	"ollama/llama/llamafile"
 )
 
 const imageCacheSize = 4

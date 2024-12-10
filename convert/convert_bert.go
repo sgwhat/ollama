@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"ipex-llm-ollama/llm"
+	"ollama/llm"
 )
 
 type bertModel struct {

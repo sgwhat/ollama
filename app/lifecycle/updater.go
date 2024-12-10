@@ -19,8 +19,8 @@ import (
 	"strings"
 	"time"
 
-	"ipex-llm-ollama/auth"
-	"ipex-llm-ollama/version"
+	"ollama/auth"
+	"ollama/version"
 )
 
 var (

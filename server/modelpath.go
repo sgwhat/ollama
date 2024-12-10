@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"ipex-llm-ollama/envconfig"
+	"ollama/envconfig"
 )
 
 type ModelPath struct {

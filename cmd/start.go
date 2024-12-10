@@ -7,7 +7,7 @@ import (
 	"errors"
 	"time"
 
-	"ipex-llm-ollama/api"
+	"ollama/api"
 )
 
 func waitForServer(ctx context.Context, client *api.Client) error {

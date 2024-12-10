@@ -10,7 +10,7 @@ import (
 	"strings"
 	"syscall"
 
-	"ipex-llm-ollama/api"
+	"ollama/api"
 )
 
 func startApp(ctx context.Context, client *api.Client) error {

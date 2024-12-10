@@ -11,7 +11,7 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"ipex-llm-ollama/convert/sentencepiece"
+	"ollama/convert/sentencepiece"
 )
 
 func parseSentencePiece(fsys fs.FS) (*Vocabulary, error) {

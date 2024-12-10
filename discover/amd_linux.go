@@ -15,8 +15,8 @@ import (
 	"strconv"
 	"strings"
 
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/format"
+	"ollama/envconfig"
+	"ollama/format"
 )
 
 // Discovery logic for AMD/ROCm GPUs

@@ -18,8 +18,8 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"ipex-llm-ollama/discover"
-	"ipex-llm-ollama/envconfig"
+	"ollama/discover"
+	"ollama/envconfig"
 )
 
 const (

@@ -4,7 +4,7 @@ package main
 // go build -ldflags="-H windowsgui" .
 
 import (
-	"ipex-llm-ollama/app/lifecycle"
+	"ollama/app/lifecycle"
 )
 
 func main() {

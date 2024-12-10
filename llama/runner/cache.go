@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"time"
 
-	"ipex-llm-ollama/llama/llamafile"
+	"ollama/llama/llamafile"
 )
 
 type InputCache struct {

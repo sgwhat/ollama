@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/ollama/ollama/api"
-	"github.com/ollama/ollama/discover"
+	"ollama/api"
+	"ollama/discover"
 )
 
 func TestEstimateGPULayers(t *testing.T) {

@@ -15,11 +15,11 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/exp/maps"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/envconfig"
-	"ipex-llm-ollama/parser"
-	"ipex-llm-ollama/readline"
-	"ipex-llm-ollama/types/errtypes"
+	"ollama/api"
+	"ollama/envconfig"
+	"ollama/parser"
+	"ollama/readline"
+	"ollama/types/errtypes"
 )
 
 type MultilineState int

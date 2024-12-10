@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"ipex-llm-ollama/llm"
+	"ollama/llm"
 )
 
 type gemma2Model struct {

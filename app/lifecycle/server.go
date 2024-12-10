@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"ipex-llm-ollama/api"
+	"ollama/api"
 )
 
 func getCLIFullPath(command string) string {

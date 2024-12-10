@@ -9,9 +9,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"ipex-llm-ollama/app/store"
-	"ipex-llm-ollama/app/tray"
-	"ipex-llm-ollama/envconfig"
+	"ollama/app/store"
+	"ollama/app/tray"
+	"ollama/envconfig"
 )
 
 func Run() {

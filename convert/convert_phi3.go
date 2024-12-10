@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 
-	"ipex-llm-ollama/llm"
+	"ollama/llm"
 )
 
 type phi3Model struct {

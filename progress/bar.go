@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/term"
 
-	"ipex-llm-ollama/format"
+	"ollama/format"
 )
 
 type Bar struct {

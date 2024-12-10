@@ -14,7 +14,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/spf13/cobra"
 
-	"ipex-llm-ollama/api"
+	"ollama/api"
 )
 
 func TestShowInfo(t *testing.T) {

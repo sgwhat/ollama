@@ -22,8 +22,8 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"ipex-llm-ollama/api"
-	"ipex-llm-ollama/format"
+	"ollama/api"
+	"ollama/format"
 )
 
 const maxRetries = 6
