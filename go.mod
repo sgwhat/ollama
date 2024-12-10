@@ -1,4 +1,4 @@
-module ipex-llm-ollama
+module ollama
 
 go 1.22.9
 
