@@ -92,6 +92,7 @@ func LoadModel(model string, maxArraySize int) (*ggml.GGML, error) {
 	defer f.Close()
 
 	ggml, _, err := ggml.Decode(f, maxArraySize)
+	
 	return ggml, err
 }
 
@@ -143,8 +144,16 @@ func NewLlamaServer(gpus discover.GpuInfoList, modelPath string, f *ggml.GGML, a
 		"--batch-size", strconv.Itoa(opts.NumBatch),
 	}
 
-	if opts.NumGPU >= 0 {
-		params = append(params, "--n-gpu-layers", strconv.Itoa(opts.NumGPU))
+	// if opts.NumGPU >= 0 {
+	// 	params = append(params, "--n-gpu-layers", strconv.Itoa(opts.NumGPU))
+	// }
+
+	if num_gpu := os.Getenv("OLLAMA_NUM_GPU"); num_gpu != "" {
+		params = append(params, "--n-gpu-layers", num_gpu)
+	} else if opts.NumGPU > 0 {
+		params = append(params, "--n-gpu-layers", fmt.Sprintf("%d", opts.NumGPU))
+	} else {
+		params = append(params, "--n-gpu-layers", "999")
 	}
 
 	if envconfig.Debug() {

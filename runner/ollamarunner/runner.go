@@ -715,7 +715,7 @@ func Execute(args []string) error {
 	mpath := fs.String("model", "", "Path to model binary file")
 	parallel := fs.Int("parallel", 1, "Number of sequences to handle simultaneously")
 	batchSize := fs.Int("batch-size", 512, "Batch size")
-	numGPULayers := fs.Int("n-gpu-layers", 0, "Number of layers to offload to GPU")
+	numGPULayers := fs.Int("n-gpu-layers", 999, "Number of layers to offload to GPU")
 	mainGPU := fs.Int("main-gpu", 0, "Main GPU")
 	flashAttention := fs.Bool("flash-attn", false, "Enable flash attention")
 	kvSize := fs.Int("ctx-size", 2048, "Context (or KV cache) size")

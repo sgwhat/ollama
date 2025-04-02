@@ -1,12 +1,11 @@
 package llama
 
 /*
-#cgo CFLAGS: -std=c11
 #cgo CXXFLAGS: -std=c++17
+#cgo LDFLAGS: -L. -lcommon -lsample -lllama -lllava_shared -lsvml -lintlc -lstdc++ -Wl,-rpath,'$ORIGIN'
 #cgo CPPFLAGS: -I${SRCDIR}/llama.cpp/include
-#cgo CPPFLAGS: -I${SRCDIR}/llama.cpp/common
-#cgo CPPFLAGS: -I${SRCDIR}/llama.cpp/examples/llava
-#cgo CPPFLAGS: -I${SRCDIR}/llama.cpp/src
+#cgo CPPFLAGS: -I${SRCDIR}/llama_include
+#cgo CPPFLAGS: -I${SRCDIR}/llamafile
 #cgo CPPFLAGS: -I${SRCDIR}/../ml/backend/ggml/ggml/include
 
 #include <stdlib.h>
@@ -37,9 +36,9 @@ import (
 	"strings"
 	"unsafe"
 
-	_ "github.com/ollama/ollama/llama/llama.cpp/common"
-	_ "github.com/ollama/ollama/llama/llama.cpp/examples/llava"
-	_ "github.com/ollama/ollama/llama/llama.cpp/src"
+	// _ "github.com/ollama/ollama/llama/llama.cpp/common"
+	// _ "github.com/ollama/ollama/llama/llama.cpp/examples/llava"
+	// _ "github.com/ollama/ollama/llama/llama.cpp/src"
 	ggml "github.com/ollama/ollama/ml/backend/ggml/ggml/src"
 )
 

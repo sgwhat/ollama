@@ -2,6 +2,7 @@ package gemma3
 
 import (
 	"math"
+	"fmt"
 
 	"github.com/ollama/ollama/kvcache"
 	"github.com/ollama/ollama/ml"
@@ -41,7 +42,8 @@ const (
 )
 
 func newTextModel(c ml.Config) *TextModel {
-	numBlocks := int(c.Uint("block_count"))
+	numBlocks := int(c.Uint("block_count")) //34
+	fmt.Println("NumofBlocks", numBlocks)
 
 	m := TextModel{
 		SentencePieceModel: model.NewSentencePieceModel(
@@ -88,6 +90,8 @@ func (sa *TextSelfAttention) Forward(ctx ml.Context, layer int, hiddenState, pos
 	batchSize := hiddenState.Dim(1)
 	ropeType := uint32(2)
 
+	fmt.Printf("Layer name is: AAAAAAAAAAAAAAAAAAAAAAAA %d\n")
+
 	ropeBase := opts.ropeLocalBase
 	if (layer+1)%gemmaGlobalCacheCount == 0 {
 		ropeBase = opts.ropeGlobalBase
@@ -114,6 +118,10 @@ func (sa *TextSelfAttention) Forward(ctx ml.Context, layer int, hiddenState, pos
 
 	scaleFactor := 1.0
 	kqv := nn.Attention(ctx, q, k, v, scaleFactor, cache)
+
+	//fmt.Printf("Layer name is: %d\n", ctx)
+	//fmt.Printf("Layer name is: %d\n", nn)
+
 	kqv = kqv.Reshape(ctx, opts.attnValLen*opts.numHeads, batchSize)
 
 	return sa.Output.Forward(ctx, kqv)
@@ -168,7 +176,8 @@ func (l *TextLayer) Forward(ctx ml.Context, layer int, hiddenState, positionIDs,
 	hiddenState = l.MLPNorm.Forward(ctx, hiddenState, opts.eps)
 	hiddenState = l.MLP.Forward(ctx, hiddenState, opts)
 	hiddenState = l.PostMLPNorm.Forward(ctx, hiddenState, opts.eps)
-	return hiddenState.Add(ctx, residual)
+	result := hiddenState.Add(ctx, residual)
+	return result
 }
 
 func (m *TextModel) Forward(ctx ml.Context, inputs, positions, outputs ml.Tensor, opts input.Options, cache kvcache.Cache) ml.Tensor {
@@ -187,6 +196,7 @@ func (m *TextModel) Forward(ctx ml.Context, inputs, positions, outputs ml.Tensor
 	}
 
 	for i, layer := range m.Layers {
+		fmt.Printf("Layer forwarding: BBBBBBBBBBBBB %d\n")
 		// gemma alternates between the sliding window (local) and causal (global)
 		// kv cache every 6 layers
 		cacheType := cacheTypeSWA
@@ -207,8 +217,11 @@ func (m *TextModel) Forward(ctx ml.Context, inputs, positions, outputs ml.Tensor
 		}
 
 		hiddenState = layer.Forward(ctx, i, hiddenState, positions, lastLayerOutputs, cache, m.TextOptions)
+		//fmt.Printf("Layer name is: %d\n", layer)
+		//fmt.Printf("Text options is: %d\n", m.TextOptions)
 	}
 
 	hiddenState = m.OutputNorm.Forward(ctx, hiddenState, m.eps)
+
 	return m.Output.Forward(ctx, hiddenState)
 }

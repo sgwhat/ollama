@@ -64,6 +64,7 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 		return nil, err
 	}
 
+
 	slog.Info(
 		"",
 		"architecture", meta.KV().Architecture(),
@@ -156,14 +157,14 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 	gpuRangeStart := max(0, blocks-params.NumGPULayers)
 	gpuRangeStop := min(gpuRangeStart+params.NumGPULayers, blocks+1)
 	assignLayer := func(i int) deviceBufferType {
-		if i < gpuRangeStart || i >= gpuRangeStop {
-			return cpuDeviceBufferType
-		}
+		// if i < gpuRangeStart || i >= gpuRangeStop {
+		// 	return cpuDeviceBufferType
+		// }
 
 		index := slices.IndexFunc(splits, func(f float32) bool { return float32(i-gpuRangeStart)/float32(gpuRangeStop-gpuRangeStart) < f })
-		if index < 0 || index >= len(gpuDeviceBufferTypes) {
-			return cpuDeviceBufferType
-		}
+		// if index < 0 || index >= len(gpuDeviceBufferTypes) {
+		// 	return cpuDeviceBufferType
+		// }
 
 		return gpuDeviceBufferTypes[index]
 	}
@@ -268,7 +269,8 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 				createTensor(tensor{source: t}, layers[layerIndex].bts)
 			} else {
 				// load all other tensors on the cpu
-				createTensor(tensor{source: t}, input.bts)
+				//createTensor(tensor{source: t}, input.bts)
+				createTensor(tensor{source: t}, gpuDeviceBufferTypes[0].bts)
 			}
 		}
 	}
@@ -284,10 +286,19 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 		C.ggml_backend_buffer_set_usage(b, C.GGML_BACKEND_BUFFER_USAGE_WEIGHTS)
 		bbs[c] = b
 	}
+	var bufferValues []*C.struct_ggml_backend_buffer
+	for _, v := range bbs {
+		bufferValues = append(bufferValues, v)
+	}
+
+	// Now you can use len() on the slice
+	numValues := len(ctxs)
+	slog.Info("Number of model weight buffers", "count", numValues)
 
 	for bs := range maps.Values(bbs) {
 		slog.Info("model weights", "buffer", C.GoString(C.ggml_backend_buffer_name(bs)), "size", format.HumanBytes2(uint64(C.ggml_backend_buffer_get_size(bs))))
 	}
+	
 
 	// map tensor names to tensors for easy lookup later
 	tensors := make(map[string]*C.struct_ggml_tensor)
@@ -321,6 +332,8 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 				if n != len(bts) {
 					return errors.New("short read")
 				}
+				
+				// 重排成我们的format
 
 				C.ggml_backend_tensor_set(tt, unsafe.Pointer(&bts[0]), 0, C.size_t(t.Size()))
 				return nil
@@ -362,7 +375,7 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 	}
 
 	maxGraphNodes := max(8192, len(meta.Tensors().Items())*5)
-	return &Backend{
+	results := &Backend{
 		flashAttention: params.FlashAttention,
 		meta:           meta,
 		tensors:        tensors,
@@ -383,7 +396,8 @@ func New(r *os.File, params ml.BackendParams) (ml.Backend, error) {
 			return m
 		}(),
 		maxGraphNodes: maxGraphNodes,
-	}, nil
+	}
+	return results, nil
 }
 
 func init() {

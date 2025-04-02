@@ -134,7 +134,7 @@ func (kv KV) Floats(key string, defaultValue ...[]float32) []float32 {
 }
 
 func (kv KV) OllamaEngineRequired() bool {
-	return kv.Architecture() == "gemma3"
+	return kv.Architecture() == "gemma3" 
 }
 
 func keyValue[T string | uint32 | uint64 | float32 | *array | bool](kv KV, key string, defaultValue ...T) T {
@@ -273,6 +273,7 @@ func (t Tensor) typeSize() uint64 {
 	case 11: // Q3_K
 		return blockSize/8 + blockSize/4 + 12 + 2
 	case 12: // Q4_K
+		//fmt.Println("BLOCK Size is ", blockSize)
 		return 2 + 2 + 12 + blockSize/2
 	case 13: // Q5_K
 		return 2 + 2 + 12 + blockSize/8 + blockSize/2
